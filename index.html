@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Control Casa</title>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+</head>
+
+<body>
+
+<h1>Control de Casa</h1>
+
+<h2>Foco 1</h2>
+<button onclick="foco1(1)">Encender</button>
+<button onclick="foco1(0)">Apagar</button>
+
+<h2>Foco 2</h2>
+<button onclick="foco2(1)">Encender</button>
+<button onclick="foco2(0)">Apagar</button>
+
+<h2>Foco 3</h2>
+<button onclick="foco3(1)">Encender</button>
+<button onclick="foco3(0)">Apagar</button>
+
+<h2>Ventilador</h2>
+<button onclick="ventilador(1)">Encender</button>
+<button onclick="ventilador(0)">Apagar</button>
+
+<script>
+
+var firebaseConfig = {
+databaseURL: "https://proyecto-esp-32-d5795-default-rtdb.firebaseio.com/"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+function foco1(valor){
+firebase.database().ref("/led").set(valor);
+}
+
+function foco2(valor){
+firebase.database().ref("/foco2").set(valor);
+}
+
+function foco3(valor){
+firebase.database().ref("/foco3").set(valor);
+}
+
+function ventilador(valor){
+firebase.database().ref("/ventilador").set(valor);
+}
+
+</script>
+
+</body>
+</html>
