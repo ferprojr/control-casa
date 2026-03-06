@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Control Casa</title>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+</head>
+
+<body>
+
+<h2>Control de Dispositivos</h2>
+
+<button onclick="encender('led')">LED ON</button>
+<button onclick="apagar('led')">LED OFF</button>
+
+<br><br>
+
+<button onclick="encender('foco1')">FOCO 1 ON</button>
+<button onclick="apagar('foco1')">FOCO 1 OFF</button>
+
+<br><br>
+
+<button onclick="encender('foco2')">FOCO 2 ON</button>
+<button onclick="apagar('foco2')">FOCO 2 OFF</button>
+
+<br><br>
+
+<button onclick="encender('ventilador')">VENTILADOR ON</button>
+<button onclick="apagar('ventilador')">VENTILADOR OFF</button>
+
+<script>
+
+const firebaseConfig = {
+
+  apiKey: "AIzaSyDw5PIUSWe58jSqxd-NpgBxVM13goM9Bb8",
+  authDomain: "proyecto-esp-32-d5795.firebaseapp.com",
+  databaseURL: "https://proyecto-esp-32-d5795-default-rtdb.firebaseio.com",
+  projectId: "proyecto-esp-32-d5795",
+
+};
+
+firebase.initializeApp(firebaseConfig);
+
+var database = firebase.database();
+
+function encender(dispositivo){
+
+database.ref(dispositivo).set(1);
+
+}
+
+function apagar(dispositivo){
+
+database.ref(dispositivo).set(0);
+
+}
+
+</script>
+
+</body>
+</html>
