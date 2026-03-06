@@ -2,9 +2,10 @@
 <html>
 
 <head>
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Control Inteligente</title>
+<title>Smart Home</title>
 
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
@@ -12,57 +13,101 @@
 <style>
 
 body{
-font-family: Arial;
-background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+margin:0;
+font-family:Arial;
+background:#0f172a;
 color:white;
 text-align:center;
-margin:0;
-padding:0;
 }
 
-h1{
+.header{
+background:#111827;
 padding:20px;
+font-size:26px;
+font-weight:bold;
+box-shadow:0 3px 10px rgba(0,0,0,0.4);
 }
 
-.container{
+.grid{
+
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:20px;
-padding:20px;
+padding:25px;
+
 }
 
 .card{
-background:#ffffff15;
-border-radius:15px;
-padding:20px;
-box-shadow:0 5px 15px rgba(0,0,0,0.3);
+
+background:#1f2937;
+border-radius:18px;
+padding:25px;
+box-shadow:0 5px 20px rgba(0,0,0,0.5);
+transition:0.3s;
+
+}
+
+.card:hover{
+transform:scale(1.05);
+}
+
+.icon{
+
+font-size:40px;
+margin-bottom:10px;
+
 }
 
 button{
-width:120px;
-height:45px;
-margin:10px;
+
 border:none;
-border-radius:10px;
+border-radius:12px;
+padding:12px 18px;
 font-size:16px;
-font-weight:bold;
+margin:8px;
 cursor:pointer;
+transition:0.2s;
+
 }
 
 .on{
-background:#27ae60;
+
+background:#22c55e;
 color:white;
+
 }
 
 .off{
-background:#c0392b;
+
+background:#ef4444;
 color:white;
+
+}
+
+button:hover{
+
+opacity:0.8;
+
 }
 
 .status{
+
 margin-top:10px;
 font-size:18px;
 font-weight:bold;
+
+}
+
+.online{
+
+color:#22c55e;
+
+}
+
+.offline{
+
+color:#ef4444;
+
 }
 
 </style>
@@ -71,36 +116,58 @@ font-weight:bold;
 
 <body>
 
-<h1>🏠 Control de Casa Inteligente</h1>
+<div class="header">
+🏠 Smart Home Control
+</div>
 
-<div class="container">
+<div class="grid">
 
 <div class="card">
-<h2>💡 Foco 1</h2>
+
+<div class="icon">💡</div>
+<h2>Foco Sala</h2>
+
 <button class="on" onclick="control('led',1)">Encender</button>
 <button class="off" onclick="control('led',0)">Apagar</button>
-<div class="status" id="s1">Estado...</div>
+
+<div class="status" id="s1">...</div>
+
 </div>
 
 <div class="card">
-<h2>💡 Foco 2</h2>
+
+<div class="icon">💡</div>
+<h2>Foco Cocina</h2>
+
 <button class="on" onclick="control('foco2',1)">Encender</button>
 <button class="off" onclick="control('foco2',0)">Apagar</button>
-<div class="status" id="s2">Estado...</div>
+
+<div class="status" id="s2">...</div>
+
 </div>
 
 <div class="card">
-<h2>💡 Foco 3</h2>
+
+<div class="icon">💡</div>
+<h2>Foco Recámara</h2>
+
 <button class="on" onclick="control('foco3',1)">Encender</button>
 <button class="off" onclick="control('foco3',0)">Apagar</button>
-<div class="status" id="s3">Estado...</div>
+
+<div class="status" id="s3">...</div>
+
 </div>
 
 <div class="card">
-<h2>🌀 Ventilador</h2>
+
+<div class="icon">🌀</div>
+<h2>Ventilador</h2>
+
 <button class="on" onclick="control('ventilador',1)">Encender</button>
 <button class="off" onclick="control('ventilador',0)">Apagar</button>
-<div class="status" id="s4">Estado...</div>
+
+<div class="status" id="s4">...</div>
+
 </div>
 
 </div>
@@ -108,29 +175,45 @@ font-weight:bold;
 <script>
 
 var firebaseConfig = {
+
 databaseURL: "https://proyecto-esp-32-d5795-default-rtdb.firebaseio.com/"
+
 };
 
 firebase.initializeApp(firebaseConfig);
 
 function control(dispositivo,valor){
+
 firebase.database().ref("/"+dispositivo).set(valor);
+
 }
 
 firebase.database().ref("led").on("value",function(snapshot){
-document.getElementById("s1").innerHTML = snapshot.val()==1 ? "Encendido" : "Apagado";
+
+document.getElementById("s1").innerHTML =
+snapshot.val()==1 ? "🟢 Encendido" : "🔴 Apagado";
+
 });
 
 firebase.database().ref("foco2").on("value",function(snapshot){
-document.getElementById("s2").innerHTML = snapshot.val()==1 ? "Encendido" : "Apagado";
+
+document.getElementById("s2").innerHTML =
+snapshot.val()==1 ? "🟢 Encendido" : "🔴 Apagado";
+
 });
 
 firebase.database().ref("foco3").on("value",function(snapshot){
-document.getElementById("s3").innerHTML = snapshot.val()==1 ? "Encendido" : "Apagado";
+
+document.getElementById("s3").innerHTML =
+snapshot.val()==1 ? "🟢 Encendido" : "🔴 Apagado";
+
 });
 
 firebase.database().ref("ventilador").on("value",function(snapshot){
-document.getElementById("s4").innerHTML = snapshot.val()==1 ? "Encendido" : "Apagado";
+
+document.getElementById("s4").innerHTML =
+snapshot.val()==1 ? "🟢 Encendido" : "🔴 Apagado";
+
 });
 
 </script>
